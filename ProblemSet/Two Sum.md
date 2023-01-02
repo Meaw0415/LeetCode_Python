@@ -1,3 +1,5 @@
+
+
 # Two Sum
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
@@ -5,42 +7,15 @@ You may assume that each input would have exactly one solution, and you may not 
 
 You can return the answer in any order.
 
-ex1.
+Example 1.
+```python
 >Input: nums = [2,7,11,15], target = 9
 Output: [0,1]
 Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
-
+```
 My first solution:
-<html>
-<style>
-    .mac {
-        10px;
-        height:10px;
-        border-radius:5px;
-        float:left;
-        margin:10px 0 0 5px;
-    }
-    .b1 {
-        background:#E0443E;
-        margin-left: 10px;
-    }
-    .b2 { background:#DEA123; }
-    .b3 { background:#1AAB29; }
-    .warpper{
-        background:#121212;
-        border-radius:5px;
-        400px;
-    }
-</style>
-<div class="warpper">
-    <div class="mac b1"></div>
-    <div class="mac b2"></div>
-    <div class="mac b3"></div>
-<div>
-<br>
-</html>
-
-```cpp
+```
+```python
 def twoSum(self, nums, target):
         """
         :type nums: List[int]
@@ -53,6 +28,50 @@ def twoSum(self, nums, target):
                     continue 
                 if nums[i] + nums[j] == target:
                     return [i,j]
+```
+Obviously, it is not the best solu. 
+It needs $O$($n^2$) time complexity and $O$($1$) space complexity.
 
 
+Here is a better solution using Hash Table which needs $O$($n$) time complexity and $O$($n$) space complexity. 
+
+
+Note: In Python, Dict could be a hash table. In other languages, map could be a hash table.
+
+
+Here is the how we map keys and values. $H(x) = idx(x)$. We record what we have found and the index of that number. We only need to find $target-x$
+
+
+
+```
+def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        hash_table = dict()
+        for idx,num in enumerate(nums):
+            if target-num in hash_table.keys(): 
+            # It should be faster if we use hash_table instead of hash_table.keys() 
+                return [idx,hash_table[target-num]]
+            else:
+                hash_table[num] = idx
+```
+
+So the final solution should be 
+```
+def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        hash_table = dict()
+        for idx,num in enumerate(nums):
+            if target-num in hash_table: 
+                return [idx,hash_table[target-num]]
+            else:
+                hash_table[num] = idx
+```
 
